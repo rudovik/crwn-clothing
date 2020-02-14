@@ -3,7 +3,6 @@ import React from 'react';
 import './custom-button.styles.scss';
 
 const CustomButton = ({ children, isGoogleSignIn, ...otherProps }) => {
-  console.log('isGoogleSignIn =' + isGoogleSignIn);
   return (
     <button
       className={`${isGoogleSignIn ? 'google-sign-in' : ''} custom-button`}
