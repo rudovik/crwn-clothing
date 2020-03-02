@@ -1,9 +1,15 @@
 import React from 'react';
 
+import { withRouter } from 'react-router-dom';
+
+import { connect } from 'react-redux';
+
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUpStart } from '../../redux/user/user.actions';
+
+// import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import './sign-up.styles.scss';
 
@@ -24,28 +30,34 @@ class SignUp extends React.Component {
 
     const { displayName, email, password, confirmPassword } = this.state;
 
+    const { signUpStart } = this.props;
+
     if (password !== confirmPassword) {
       alert("passwords don't match");
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password
-      );
+    signUpStart({ email, password, params: { displayName } });
 
-      await createUserProfileDocument(user, { displayName });
+    // try {
+    //   const { user } = await auth.createUserWithEmailAndPassword(
+    //     email,
+    //     password
+    //   );
 
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    //   await createUserProfileDocument(user, { displayName });
+
+    //   await this.setState({
+    //     displayName: '',
+    //     email: '',
+    //     password: '',
+    //     confirmPassword: ''
+    //   });
+
+    //   await history.push('/');
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   handleChange = event => {
@@ -100,4 +112,9 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapDispatchToProps = dispatch => ({
+  signUpStart: emailAndPasswordAndParams => {
+    dispatch(signUpStart(emailAndPasswordAndParams));
+  }
+});
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));
