@@ -1,4 +1,4 @@
-import React, { Profiler } from 'react';
+import React /*, { Profiler }*/ from 'react';
 
 import Directory from '../../components/directory/directory.component';
 
@@ -8,7 +8,7 @@ import { HomePageContainer } from './homepage.styles';
 
 const HomePage = () => (
   <HomePageContainer>
-    <Profiler
+    {/* <Profiler
       id='Directory'
       onRender={(id, phase, actualDuration) => {
         console.log({
@@ -17,9 +17,9 @@ const HomePage = () => (
           actualDuration
         });
       }}
-    >
-      <Directory />
-    </Profiler>
+    > */}
+    <Directory />
+    {/* </Profiler> */}
   </HomePageContainer>
 );
 
